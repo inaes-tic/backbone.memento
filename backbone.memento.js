@@ -44,7 +44,7 @@ Backbone.Memento = (function(Backbone, _){
     //  effectively taking the current state of the model
     //  as a new starting point.
     this.commit = function(){
-      serializer.clean();
+      mementoStack.clean();
     };
   };
 
@@ -111,7 +111,7 @@ Backbone.Memento = (function(Backbone, _){
       var oldAttrs = dropIgnored(previousState, restoreConfig);
 
       //get the current state
-      var currentAttrs = _.clone(structure.attributes);
+      var currentAttrs = structure.toJSON();
       currentAttrs = dropIgnored(currentAttrs, restoreConfig);
 
       //handle removing attributes that were added
@@ -122,7 +122,7 @@ Backbone.Memento = (function(Backbone, _){
     }
 
     this.serialize = function(){
-      var attrs = _.clone(structure.attributes);
+      var attrs = structure.toJSON();
       attrs = dropIgnored(attrs, config);
       return attrs;
     }
